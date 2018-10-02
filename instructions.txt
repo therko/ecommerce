@@ -1,0 +1,11 @@
+mkvirtualenv my_project
+workon my_project
+deactivate
+
+#pip install django
+
+#django-admin startproject ecommerce .
+
+#python manage.py runserver
+
+#python manage.py migrate
