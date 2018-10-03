@@ -13,3 +13,5 @@ deactivate
 #python manage.py createsuperuser
 admin
 qwe123!@#
+
+#python manage.py collectstatic
