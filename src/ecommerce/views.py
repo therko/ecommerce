@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from .forms import ContactForm
+from .forms import ContactForm, LoginForm
+from django.contrib.auth import authenticate, login
 
 def home_page(request):
     context = {
@@ -31,29 +32,32 @@ def contact_page(request):
     #     print(request.POST.get('full_name')) 
     return render(request, "contact/view.html", context)
 
-def home_page_old(request):
-    html_ = """
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+def login_page(request):
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    form = LoginForm(request.POST or None)
+    context = {
+        "form": form
+    }
 
-        <title>Hello, world!</title>
-    </head>
-    <body>
-        <h1>Hello, world!</h1>
+    
+    if form.is_valid():
+        print(form.cleaned_data)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </body>
-    </html>
-    """
-    return HttpResponse(html_)
+        user = authenticate(request, username=username, password=password)
+        print(request.user.is_authenticated)
+
+        if user is not None:
+            login(request, user)
+            return redirect("/login")
+        else:
+            print("Error")
+
+    return render(request, "auth/login.html", context)
+
+def register_page(request):
+    form = LoginForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+    return render(request, "auth/register.html", {})        
