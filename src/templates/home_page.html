@@ -21,6 +21,13 @@
                     <p>{{ content }}</p>
                 </div>
             </div>
+            {% if premium_content%}
+                <div class='row'>
+                    <div class='col'>
+                        <p>{{ premium_content }}</p>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
         <!-- Optional JavaScript -->
