@@ -3,11 +3,13 @@ workon my_project
 deactivate
 
 #pip install django
+#pip install pylint-django
 
 #django-admin startproject ecommerce .
 
 #python manage.py runserver
 
+#python manage.py makemigrations
 #python manage.py migrate
 
 #python manage.py createsuperuser
@@ -15,3 +17,6 @@ admin
 qwe123!@#
 
 #python manage.py collectstatic
+
+#python manage.py startapp products
+
