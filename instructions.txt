@@ -20,3 +20,8 @@ qwe123!@#
 
 #python manage.py startapp products
 
+
+
+#for new views:
+-add view in views.py,
+-add urls in urls.py, add import
