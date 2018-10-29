@@ -1,3 +1,6 @@
+pip install virtualenvwrapper
+python -m virtualenv .
+
 mkvirtualenv my_project
 workon my_project
 deactivate
